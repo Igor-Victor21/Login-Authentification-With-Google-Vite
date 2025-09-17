@@ -26,16 +26,22 @@ Repositório de Login com autentificação com o google
 
     npm i react-router-dom
 
+##
+
 - Imports da main
 
     import { StrictMode } from 'react'<br/>
     import { createRoot } from 'react-dom/client'<br/>
     import { BrowserRouter, Routes, Route } from 'react-router-dom'<br/>
 
+##
+
 - Import das Rotas
 
     import './index.css'<br/>
     import App from './App.tsx'<br/>
+
+##
 
 - Organizar o root 
 
@@ -43,6 +49,8 @@ Repositório de Login com autentificação com o google
     Adicione <BrowserRouter><BrowserRouter/><br/>
     Dentro do BrowserRouter adicione: <Routes><Routes/><br/>
     Dentro do Routes adicione: <Route path='/' element={<App/>}/>
+
+##
     
 - Código do root
 
@@ -55,6 +63,8 @@ Repositório de Login com autentificação com o google
   </StrictMode>,<br/>
 
 # Começando o Login na App.tsx
+
+
 
 
 
