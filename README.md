@@ -62,6 +62,25 @@ Repositório de Login com autentificação com o google
     </BrowserRouter><br/>
   </StrictMode>,<br/>
 
+# AVISO DE POSSÍVEL ERRO DE VERSÃO 
+
+O projeto pode apresentar erro ao utilizar <BrowserRouter>, como mensagens de "Invalid hook call" ou "Cannot read properties of null (reading 'useRef')". Isso geralmente acontece quando o projeto está usando versões experimentais ou incompatíveis do React e do React Router, por exemplo React 19 e React Router 7, que ainda não têm suporte completo.<br/>
+<br/>
+Para resolver, é necessário alinhar as versões para estáveis: React 18 e React Router 6. Também é importante limpar as dependências antigas e reinstalar os pacotes, garantindo que o <BrowserRouter> e os hooks funcionem corretamente. Com essas versões, o projeto roda sem esse tipo de erro.<br/>
+<br/>
+Prompt Modelo para usar com o ChatGPT<br/>
+<br/>
+"ChatGPT, estou com um erro no meu projeto React/Vite. Aqui está o log do console:<br/>
+[cole o erro completo aqui]
+<br/>
+Minha versão atual do React, React DOM e React Router DOM é:<br/>
+[cole npm ls react react-dom react-router-dom aqui]<br/>
+<br/>
+Meu main.tsx é:<br/>
+[cole o código do main.tsx aqui]<br/>
+<br/>
+Pode me explicar o que está causando esse erro, resumir em poucas palavras e me indicar como resolver de forma prática?"<br/>
+
 # Criando Firebase Authentication 
 
 - Para fazer a verificação com o Google, irei utilizar o Firebase, pois ele oferece diversas funcionalidades além de banco de dados, o que torna a administração mais fácil.
@@ -177,6 +196,35 @@ Clique em usuários e coloque um E-mail valido e uma senha (Coloque uma senha di
 
 - Além do que ja foi feito la em cima em "Instalação de biblioteca e criação de arquivos"
 
+# Imports 
+
+import { useEffect, useState } from 'react'<br/>
+import { useNavigate, Link } from 'react-router-dom' <br/>
+
+# Variável de estado
+- Uma constante para navegar entre os endpoints 
+
+const navigate = useNavigate()<br/>
+
+const [email, setEmail] = useState('')<br/>
+const [password, setPassword] = useState('')<br/>
+const [user, setUser] = useState(null)<br/>
+const [message, setMessage] = useState('')<br/>
+
+# useEffect
+
+ useEffect(() => {<br/>
+    const storedUser = localStorage.getItem('user')<br/>
+    if (storedUser) {<br/>
+      const parsedUser = JSON.parse(storedUser)<br/>
+      setUser(parsedUser)<br/>
+        navigate('/')<br/>
+    }<br/>
+  }, [navigate])<br/>
+
+  Com isso quando o sistema for iniciado ele vai verificar o usuário que está no localStorage, se tiver algum usuário no localStorage ele vai setar as informações do usuário na variavel de estado (user, setUser), assim liberando acesso ao sistema
+
+  
 
 
 
