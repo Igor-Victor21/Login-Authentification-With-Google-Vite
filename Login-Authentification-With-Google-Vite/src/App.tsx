@@ -1,47 +1,60 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-
-//Import para realizar login com o google
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useNavigate } from 'react-router-dom'
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
-
 import style from './App.module.css';
 
 function App() {
-
   const navigate = useNavigate()
-
+  const [user, setUser] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-  const [message, setMessage] = useState('')
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser)
-      setUser(parsedUser)
-        navigate('/')
+      setUser(JSON.parse(storedUser))
+      navigate('/')
     }
   }, [navigate])
-  
 
-  // Cria o provedor do Google
-  const provider = new GoogleAuthProvider();
+  const handleGoogleLogin = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setUser(result.user)
+        localStorage.setItem('user', JSON.stringify(result.user))
+        navigate('/loginSuccessful')
+      })
+      .catch((error) => {
+        console.error("Erro no login com Google:", error);
+      });
+  }
 
-  // Faz login com popup
-  signInWithPopup(auth, provider)
-    .then((result) => {
-      console.log("Usuário logado:", result.user);
-    })
-    .catch((error) => {
-      console.error("Erro no login:", error);
-    });
+  const handleEmailLogin = (e) => {
+    e.preventDefault()
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setUser(userCredential.user)
+        localStorage.setItem('user', JSON.stringify(userCredential.user))
+        navigate('/loginSuccessful')
+      })
+      .catch((error) => {
+        console.error("Erro no login com e-mail:", error);
+      });
+  }
 
   return (
-    <>
-      <h1>Olá :D</h1>
-    </>
+    <div className={style.container}>
+      <h1>Login</h1>
+      <form onSubmit={handleEmailLogin}>
+          <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      </form>
+        <button type="submit">Login</button>
+
+      <button onClick={handleGoogleLogin}>Continuar com Google</button>
+    </div>
   )
 }
 
