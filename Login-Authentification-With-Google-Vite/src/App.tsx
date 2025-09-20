@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase";
+
 import style from './App.module.css';
 
 function App() {
@@ -14,7 +16,7 @@ function App() {
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
       setUser(JSON.parse(storedUser))
-      navigate('/')
+      navigate('/loginSuccessful')
     }
   }, [navigate])
 
