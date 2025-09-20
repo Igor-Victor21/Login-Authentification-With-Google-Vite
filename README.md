@@ -278,18 +278,6 @@ O resultado desse processo é retornado em um objeto userCredential. As informa�
 
 Aqui temos apenas inputs simples que atualizam os estados com as informações digitadas pelo usuário. Esses valores depois são utilizados pelas arrow functions responsáveis por validar e efetuar o login.
 
-<br/>
-<div className={style.container}><br/>
-      <h1>Login</h1><br/>
-      <form onSubmit={handleEmailLogin}><br/>
-          <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)}/><br/>
-          <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)}/><br/>
-      </form><br/>
-        <button type="submit">Login</button><br/>
-
-      <button onClick={handleGoogleLogin}>Continuar com Google</button><br/>
-    </div><br/>
-  )<br/>
-}<br/>
+### O Código está dentro do return();
 
 # DOCUMENTAÇÃO FINALIZADA
