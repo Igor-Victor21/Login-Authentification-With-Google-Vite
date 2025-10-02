@@ -1,63 +1,63 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebase";
-
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { api } from './api/api'; // Axios configurado com baseURL
 import style from './App.module.css';
 
 function App() {
-  const navigate = useNavigate()
-  const [user, setUser] = useState(null)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user')
-    if (storedUser) {
-      setUser(JSON.parse(storedUser))
-      navigate('/loginSuccessful')
+    const token = localStorage.getItem('token');
+    if (token) navigate('/loginSuccessful');
+  }, [navigate]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await api.post('/login', { email, password });
+      const { token, user } = response.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      navigate('/loginSuccessful');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Erro no login');
     }
-  }, [navigate])
+  };
 
-  const handleGoogleLogin = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        setUser(result.user)
-        localStorage.setItem('user', JSON.stringify(result.user))
-        navigate('/loginSuccessful')
-      })
-      .catch((error) => {
-        console.error("Erro no login com Google:", error);
-      });
-  }
-
-  const handleEmailLogin = (e) => {
-    e.preventDefault()
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUser(userCredential.user)
-        localStorage.setItem('user', JSON.stringify(userCredential.user))
-        navigate('/loginSuccessful')
-      })
-      .catch((error) => {
-        console.error("Erro no login com e-mail:", error);
-      });
-  }
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+  };
 
   return (
     <div className={style.container}>
       <h1>Login</h1>
-      <form onSubmit={handleEmailLogin}>
-          <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)}/>
-          <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      </form>
+      <form onSubmit={handleLogin}>
+        <input
+          type="email"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">Login</button>
-
-      <button onClick={handleGoogleLogin}>Continuar com Google</button>
+      </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
