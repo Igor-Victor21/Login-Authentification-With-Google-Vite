@@ -14,7 +14,7 @@ function App() {
   e.preventDefault();
 
   try {
-    const response = await api.post('/login', { email, password });
+    const response = await api.post('/login', { email, password }, { withCredentials: true });
     const user = response.data.user;
 
     localStorage.setItem("user", JSON.stringify(user));
