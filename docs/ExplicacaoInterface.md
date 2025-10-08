@@ -53,6 +53,23 @@ Este arquivo é responsável pela interface de login do sistema. Para acessar o 
 
 ##
 
+### firebase.tsx
+Este arquivo é responsável por conectar o sistema ao Firebase, permitindo a execução de funções como o logout do usuário autenticado, obter as informações do usuário, criar uma nova conta de usuário, enviar e-mail de redefinição de senha, entre outras interações com os serviços do Firebase.
+
+Este arquivo é responsável apenas pela configuração do projeto no Firebase. O código utilizado nele já é gerado automaticamente pelo próprio site do Firebase, dentro das configurações do projeto.
+
+Como acessar as configurações do Firebase:
+
+- Acesse o console do Firebase.
+
+- Selecione o seu projeto.
+
+- Clique no ícone de engrenagem ao lado do nome do projeto e escolha Configurações do projeto.
+
+- Na seção Seus apps, selecione a plataforma (Web, Android ou iOS) e copie o código de configuração exibido, ele é o que deve ser inserido no arquivo firebase.tsx.
+
+##
+
 ### LoginSuccessful.tsx
 
 Este arquivo é acessível somente pelo administrador do sistema, permitindo cadastrar novos usuários.
