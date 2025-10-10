@@ -31,6 +31,7 @@ function App() {
 };
 
   return (
+  <section className={style.wrapLogin}>
     <div className={style.container}>
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
@@ -40,6 +41,7 @@ function App() {
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
+  </section>
   );
 }
 
