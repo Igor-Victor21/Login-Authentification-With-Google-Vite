@@ -46,9 +46,19 @@ function LoginSuccessful() {
   }, [navigate]);
 
   return (
-    <div className={style.container}>
+    <>
+    <section id={style.s1InfoUser}>
       <h2>Bem-vindo {user.email}</h2>
+      
+    </section>
 
+    <section id={style.s2ListUsers}>
+
+    </section>
+    
+    <section id={style.s3CreateUser}>
+
+      <div className={style.container}>
       {user.admin && (
         <>
           <h3>Criar novo usuário</h3>
@@ -61,6 +71,12 @@ function LoginSuccessful() {
 
       {message && <p>{message}</p>}
     </div>
+
+    </section>
+    <section id={style.s4PromoteUser}>
+
+    </section>
+    </>
   );
 }
 
