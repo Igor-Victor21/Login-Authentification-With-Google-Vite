@@ -57,7 +57,9 @@ form input::placeholder {
     border-bottom: 2px solid white;
 }
 
-button {
+.btnSubmit{
+    position: relative;
+    left: 40px;
     width: 200px;
     margin: 10px;
     padding: 10px;
@@ -66,4 +68,15 @@ button {
     font-family: 'Poppins', sans-serif;
     cursor: pointer;
 
+}
+
+.btnEsqueciSenha{
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+    padding: 10px 5px;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    cursor: pointer;
 }

@@ -1,12 +1,31 @@
 #s1InfoUser{
-
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: gray;
 }
 
 #s2ListUsers{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: antiquewhite;
 
 }
 
 #s3CreateUser{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background-color: ;
 
 }
 
@@ -20,14 +39,5 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.profileImage {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 15px;
-}
 
-#s4PromoteUser{
-  
-}
 

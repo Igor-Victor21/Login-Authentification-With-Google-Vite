@@ -1,48 +1,73 @@
-// App.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from './api/api'
+import { api } from './api/api';
 import style from './App.module.css';
 
 function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
- const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
 
-  try {
-    const response = await api.post('/login', { email, password }, { withCredentials: true });
-    const user = response.data.user;
+    try {
+      // Faz login no backend
+      const response = await api.post('/login', { email, password }, { withCredentials: true });
+      const user = response.data.user;
 
-    localStorage.setItem("user", JSON.stringify(user));
+      // Salva apenas informações seguras
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
 
-    // Verifica se é admin
-    if (user.admin) {
-      navigate("/loginSuccessful"); // Tela de admin
-    } else {
-      navigate("/loginSuccessfulUsers"); // Tela comum
+      // Verifica admin direto no backend
+      const adminCheck = await api.get("/admin/dashboard", { withCredentials: true });
+
+      if (adminCheck.status === 200) {
+        // Tela de admin
+        navigate("/loginSuccessful"); 
+      } else {
+        // Tela comum
+        navigate("/loginSuccessfulUsers"); 
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Erro no login");
     }
-  } catch (err) {
-    setError(err.response?.data?.message || "Erro no login");
-  }
-};
+  };
+
+  const handleForgotPassword = async () => {
+    try {
+      const response = await api.post('/forgot-password', { email });
+      alert(response.data.message);
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Erro ao enviar link");
+    }
+  };
 
   return (
-  <section className={style.wrapLogin}>
-    <div className={style.container}>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} />
-        <input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
-        <button type="submit">Login</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
-  </section>
+    <section className={style.wrapLogin}>
+      <div className={style.container}>
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
+          <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} />
+          <input type="password" placeholder="Senha" value={password} onChange={e => setPassword(e.target.value)} />
+          <button className={style.btnSubmit} type="submit">Login</button>
+        </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {message && <p style={{ color: 'green' }}>{message}</p>}
+        <button type="button" onClick={handleForgotPassword} className={style.btnEsqueciSenha}>
+          Esqueci a senha
+        </button>
+      </div>
+    </section>
   );
 }
 
-export default App
+export default App;
