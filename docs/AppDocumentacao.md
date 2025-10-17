@@ -31,11 +31,60 @@ Após a validação:
 
 - Caso contrário, exibe uma mensagem de erro na tela.
 
+```bash
+const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setMessage('');
+
+    try {
+      const response = await api.post('/login', { email, password }, { withCredentials: true });
+      const user = response.data.user;
+
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName
+      }));
+
+      const adminCheck = await api.get("/admin/dashboard", { withCredentials: true });
+
+      if (adminCheck.status === 200) {
+        // Tela de admin
+        navigate("/loginSuccessful"); 
+      } else {
+        // Tela comum
+        navigate("/loginSuccessfulUsers"); 
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Erro no login");
+    }
+  };
+```
+
 ##
+
 
 ### Importante
 
 Para realizar o login com sucesso, o usuário precisa estar pré-cadastrado no sistema de Authentication do Firebase.
+
+##
+
+### handleForgotPassword
+
+Função responsável por redefinir a senha do usuário em casos de esquecimento. A implementação é feita diretamente na API, utilizando os recursos do Firebase para autenticação e a biblioteca Nodemailer para o envio do e-mail de redefinição.
+
+```bash
+const handleForgotPassword = async () => {
+    try {
+      const response = await api.post('/forgot-password', { email });
+      alert(response.data.message);
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Erro ao enviar link");
+    }
+  };
+```
 
 ##
 
