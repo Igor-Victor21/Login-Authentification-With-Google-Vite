@@ -20,24 +20,10 @@ Recomendo que você crie o projeto do zero por três motivos:
 
 Para criar um projeto novo e facíl, para saber clique em [Saiba mais](./docs/CriacaoVite.md)
 
-## Instrução de instalação 
+## Sobre a instalação 
 
-Caso não queira seguir a recomendação.
-
-Clone o repositório
-```bash
-git clone https://github.com/Igor-Victor21/Login-Authentification-With-Google-Vite.git
-```
-
-Acesse a pasta Login-Authentification-With-Google-Vite
-```bash
-cd Login-Authentification-With-Google-Vite/
-```
-
-Agora só instalar o node_modules
-```bash
-npm install
-```
+Recomenda-se não clonar este repositório. Em vez disso, utilize esta documentação como referência para construir seu próprio sistema de login.
+Dessa forma, além de compreender melhor o funcionamento do projeto, você poderá estruturar e organizar o sistema conforme suas próprias necessidades.
 
 ## O que é necessário para o sistema funcionar
 
@@ -51,6 +37,23 @@ Para que o projeto funcione corretamente, você precisa ter:
 
 Se ainda não configurou esses dois recursos, acesse a documentação completa:
 [Clique aqui para configurar o Firebase](./docs/Firebase-Db-Auth.md)
+## 
+
+### Caso ja tenha o necessário
+
+Se você está começando agora e deseja entender a função de cada pasta na raiz do projeto, acesse o link abaixo:
+
+[Explicação da raiz do projeto](./docs/ExplicacaoSistema.md)
+
+### Explicação do projeto 
+
+Nesta seção, vamos explicar como o sistema está estruturado e qual é a função de cada arquivo dentro do projeto.
+O objetivo é apresentar de forma clara o papel de cada componente, pasta e configuração, facilitando o entendimento geral do funcionamento do sistema.
+
+[Criação e explicação de interface](./docs/ExplicacaoInterface.md).
+
+
+
 
 
 
